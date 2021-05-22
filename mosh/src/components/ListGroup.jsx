@@ -1,30 +1,27 @@
-import React, { Component } from "react";
+import React from "react";
 
-class ListGroup extends Component {
-  render() {
-    const genres = this.props.genres;
-    return (
-      <ul className="list-group">
-        <li
-          onClick={() => this.props.onGenreChange("all")}
-          className="list-group-item"
-        >
-          All Genres
-        </li>
-        {genres.map((genre) => {
-          return (
-            <li
-              key={genre.name}
-              onClick={() => this.props.onGenreChange(genre)}
-              className="list-group-item"
-            >
-              {genre.name}
-            </li>
-          );
-        })}
-      </ul>
-    );
-  }
-}
+const ListGroup = (props) => {
+  const genres = props.genres;
+  const selectedItem = props.selectedGenre;
+  return (
+    <ul className="list-group">
+      {genres.map((genre) => {
+        return (
+          <li
+            key={genre._id}
+            onClick={() => props.onGenreChange(genre)}
+            className={
+              genre === selectedItem
+                ? "list-group-item active"
+                : "list-group-item"
+            }
+          >
+            {genre.name}
+          </li>
+        );
+      })}
+    </ul>
+  );
+};
 
 export default ListGroup;

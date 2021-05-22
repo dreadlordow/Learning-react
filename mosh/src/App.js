@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { render } from "react-dom";
 import "./App.css";
-import { getMovies } from "./services/fakeMovieService";
 import Navbar from "./components/Navbar";
 import Counters from "./components/Counters";
 
