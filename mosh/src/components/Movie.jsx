@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Like from "./Like";
+import { Link } from "react-router-dom";
 
 class Movie extends Component {
   constructor(props) {
@@ -17,10 +18,12 @@ class Movie extends Component {
   };
 
   render() {
-    const m = this.props.m;
+    const m = this.props.item;
     return (
       <tr key={m._id}>
-        <th>{m.title}</th>
+        <th>
+          <Link to={`/movies/${m._id}`}>{m.title}</Link>
+        </th>
         <th>{m.genre.name}</th>
         <th>{m.numberInStock}</th>
         <th>{m.dailyRentalRate}</th>

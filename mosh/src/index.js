@@ -1,16 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-// import App from "./App";
-import Movies from "./components/Movies";
-import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.css";
+import Navbar from "./components/Navbar";
+import App from './App'
+import { BrowserRouter } from "react-router-dom";
+import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Movies />
-  </React.StrictMode>,
+  <BrowserRouter>
+    <Navbar />
+    <App />
+  </BrowserRouter>,
+
   document.getElementById("root")
 );
 

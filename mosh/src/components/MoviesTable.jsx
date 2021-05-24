@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Movie from "./Movie";
 import TableHeader from "./common/TableHeader";
+import TableBody from "./common/TableBody";
 class MoviesTable extends Component {
   columns = [
     { path: "title", label: "Title" },
@@ -19,17 +20,11 @@ class MoviesTable extends Component {
           columns={this.columns}
           onSort={onSort}
           sortColumn={sortColumn} />
-        <tbody>
-          {paginatedMovies.map((movie) => {
-            return (
-              <Movie
-                key={movie._id}
-                m={movie}
-                onDelete={() => onDelete(movie._id)}
-              />
-            );
-          })}
-        </tbody>
+        
+          <TableBody 
+          data={paginatedMovies}
+          onDelete={onDelete}
+          sortColumn= {sortColumn}/>
       </table>
     );
   }
