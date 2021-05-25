@@ -1,10 +1,11 @@
 import React from "react";
+import MovieForm from "./MovieForm";
+import { getMovie } from "./../services/fakeMovieService";
+
 const MovieDetails = ({ match, history }) => {
-  console.log(history);
   return (
     <div>
-      <h1>Movie - {match.params.id}</h1>
-      <button onClick={() => history.push('/movies')}>Save</button>
+      <MovieForm/>
     </div>
   );
 };
