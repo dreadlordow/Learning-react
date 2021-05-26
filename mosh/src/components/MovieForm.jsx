@@ -1,8 +1,8 @@
 import React from "react";
 import Form from "./common/Form";
 import Joi from "joi-browser";
-import { getGenres } from "../services/fakeGenreService";
-import { saveMovie, getMovie } from "../services/fakeMovieService";
+import { getGenres } from "../services/genreService";
+import { saveMovie, getMovie, updateMovie } from "../services/movieService";
 
 class MovieForm extends Form {
   state = {
@@ -23,16 +23,26 @@ class MovieForm extends Form {
     numberInStock: Joi.number().required().label("Number in Stock"),
     dailyRentalRate: Joi.number().max(10).required().label("Rate"),
   };
-
-  componentDidMount() {
-    const genres = getGenres();
+  async populateGenres() {
+    const genres = await getGenres();
     this.setState({ genres });
-    const movieId = this.props.match.params.id;
-    if (movieId === "new") return;
+  }
 
-    const movie = getMovie(movieId);
-    if (!movie) return this.props.history.replace("/not-found");
-    this.setState({ data: this.mapToViewModel(movie) });
+  async populateMovieForm() {
+    try {
+      const movieId = this.props.match.params.id;
+      if (movieId === "new") return;
+      const movie = await getMovie(movieId);
+      this.setState({ data: this.mapToViewModel(movie) });
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404)
+        this.props.history.replace("/not-found");
+    }
+  }
+
+  async componentDidMount() {
+    await this.populateGenres();
+    await this.populateMovieForm();
   }
 
   mapToViewModel(movie) {
@@ -45,19 +55,24 @@ class MovieForm extends Form {
     };
   }
 
-  executeSave = () => {
+  executeSave = async (e) => {
+    e.preventDefault();
     const data = this.state.data;
-    saveMovie(data);
+    if (data._id) {
+      await updateMovie(data);
+    } else {
+      await saveMovie(data);
+    }
     this.props.history.push("/movies");
   };
 
   render() {
-    const genres = getGenres();
+    const genres = this.state.genres;
     return (
       <div>
         <form>
           {this.renderInput("title", "Title")}
-          {this.renderSelect("genreId", "Genre", this.state.genres)}
+          {this.renderSelect("genreId", "Genre", genres)}
           {this.renderInput("numberInStock", "Number in Stock")}
           {this.renderInput("dailyRentalRate", "Rate")}
           <button

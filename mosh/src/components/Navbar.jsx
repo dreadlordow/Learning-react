@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import "../components-css/Navbar-css.css";
 
-const Navbar = ({ counters }) => {
+const Navbar = ({ user }) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <NavLink className="navbar-brand" to={"/"}>
@@ -19,12 +19,27 @@ const Navbar = ({ counters }) => {
           <NavLink className="nav-link" to="/rentals">
             Rental
           </NavLink>
-          <NavLink className="nav-link" to="/login">
-            Login
-          </NavLink>
-          <NavLink className="nav-link" to="/register">
-            Register
-          </NavLink>
+          {!user && (
+            <React.Fragment>
+              <NavLink className="nav-link" to="/login">
+                Login
+              </NavLink>
+              <NavLink className="nav-link" to="/register">
+                Register
+              </NavLink>
+            </React.Fragment>
+          )}
+            {user && (
+            <React.Fragment>
+              <NavLink className="nav-link" to="/profile">
+                {user.name}
+              </NavLink>
+              <NavLink className="nav-link" to="/logout">
+                Logout
+              </NavLink>
+
+            </React.Fragment>
+          )}
         </div>
       </div>
     </nav>

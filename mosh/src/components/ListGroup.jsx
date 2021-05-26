@@ -3,9 +3,10 @@ import React from "react";
 const ListGroup = (props) => {
   const genres = props.genres;
   const selectedItem = props.selectedGenre;
+  
   return (
     <ul className="list-group">
-      {genres.map((genre) => {
+      {genres.map(genre => {
         return (
           <li
             key={genre._id}

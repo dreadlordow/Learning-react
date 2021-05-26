@@ -14,7 +14,6 @@ class Movie extends Component {
     this.setState({
       liked: !this.state.liked,
     });
-    console.log(this.state.liked);
   };
 
   render() {
