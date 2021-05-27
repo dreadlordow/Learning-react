@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
+import ProtectedRoute from "./components/common/ProtectedRoute";
 import Movies from "./components/Movies";
 import Rentals from "./components/Rentals";
 import Customers from "./components/Customers";
@@ -14,7 +15,7 @@ import "./App.css";
 
 class App extends Component {
   state = {};
- componentDidMount() {
+  componentDidMount() {
     console.log("mounted");
     const user = getCurrentUser();
     this.setState({ user });
@@ -28,11 +29,11 @@ class App extends Component {
             <Route path="/register" component={RegisterForm} />
             <Route path="/login" component={LoginForm} />
             <Route path="/logout" component={Logout} />
-            <Route path="/movies/:id" render={props => {
-                if (!this.state.user) return <Redirect to='/login' />
-                return <MovieForm {...props} />
-            }} />
-            <Route path="/movies" render={(props) => <Movies {...props} user={this.state.user} />} />
+            <ProtectedRoute path="/movies/:id" component={MovieForm} />
+            <Route
+              path="/movies"
+              render={(props) => <Movies {...props} user={this.state.user} />}
+            />
             <Route path="/customers" component={Customers} />
             <Route path="/rentals" component={Rentals} />
             <Route path="/not-found" component={NotFound} />

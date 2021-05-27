@@ -16,7 +16,6 @@ export function saveMovie(data) {
 }
 
 export function updateMovie(data) {
-  console.log(data);
   const { title, numberInStock, dailyRentalRate, genreId } = data;
   const newData = {
     title: title,

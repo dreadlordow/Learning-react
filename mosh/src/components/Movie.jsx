@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Like from "./Like";
 import { Link } from "react-router-dom";
+import { getCurrentUser } from "./../services/authServices";
 
 class Movie extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class Movie extends Component {
 
   render() {
     const m = this.props.item;
+    const user = getCurrentUser();
     return (
       <tr key={m._id}>
         <th>
@@ -30,12 +32,14 @@ class Movie extends Component {
           <Like key={m._id} liked={this.state.liked} onLike={this.handleLike} />
         </th>
         <td>
-          <button
-            className="btn btn-danger"
-            onClick={() => this.props.onDelete(m._id)}
-          >
-            Delete
-          </button>
+          {user && user.isAdmin && (
+            <button
+              className="btn btn-danger"
+              onClick={() => this.props.onDelete(m._id)}
+            >
+              Delete
+            </button>
+          )}
         </td>
       </tr>
     );
